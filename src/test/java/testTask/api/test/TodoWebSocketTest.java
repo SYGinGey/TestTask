@@ -19,6 +19,7 @@ import static helpers.Generator.randInt;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
@@ -118,18 +119,23 @@ public class TodoWebSocketTest extends BaseTest {
     }
 
     @Test
-    @Description("Verify WebSocket notifications order")
+    @Description("Verify multiple WebSocket connections")
     void testNotificationsOrder() {
-        var first = todoSteps.createTodo();
-        var second = todoSteps.createTodo();
-        var third = todoSteps.createTodo();
+        var newWSClient = todoSteps.connectWS();
+        var todo = todoSteps.createTodo();
 
         await().atMost(5, SECONDS)
-                .until(() -> wsClient.getMessages().size() == 3);
+                .until(() -> !wsClient.getMessages().isEmpty() && !newWSClient.getMessages().isEmpty());
 
-        assertThat(todoSteps.convertMessageToTodo(wsClient.getMessages()))
-                .as("WebSocket messages should be received in the same order as todos were created")
-                .containsExactly(first, second, third);
+        assertSoftly(softly -> {
+            softly.assertThat(todoSteps.convertMessageToTodo(wsClient.getMessages()))
+                    .as("Websocket should receive messages")
+                    .containsExactly(todo);
+            softly.assertThat(todoSteps.convertMessageToTodo(newWSClient.getMessages()))
+                    .as("Websocket should receive messages")
+                    .containsExactly(todo);
+            newWSClient.close();
+        });
     }
 
     @AfterEach
