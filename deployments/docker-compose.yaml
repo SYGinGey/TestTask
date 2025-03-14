@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  tests:
+    build:
+      dockerfile: deployments/Dockerfile
+      context: ..
+    depends_on:
+      - app
+    environment:
+      ADDRESS: app:4242
+    volumes:
+      - maven_cache:/usr/app/.m2/repository
+
+  app:
+    image: todo-app:latest
+    ports:
+      - "8080:4242"
+
+volumes:
+  maven_cache:

@@ -1,0 +1,41 @@
+# IDEA #
+########
+.idea/
+
+# MAVEN #
+########
+target/
+build/
+logs/
+*.iml
+**/*.iml
+
+
+# ALLURE #
+########
+.allure/
+
+# System #
+**/.DS_Store
+.DS_Store
+._.DS_Store
+**/._.DS_Store
+
+
+tr_admin_test\\report/
+tr_front_test\\report/
+
+
+# logs #
+*.log
+**/*.log
+test-output
+
+# artifacts #
+/out/artifacts/
+
+/allure-report/
+/allure-results/
+
+# imsip.properties #
+/src/main/resources/imsip.properties
