@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import static common.constants.HTTPStatus.*;
-import static common.constants.TodoConstants.TODO_PATH;
+import static common.constants.TodoConstants.*;
 import static io.restassured.RestAssured.given;
 import static java.lang.Integer.parseInt;
 
@@ -32,7 +32,7 @@ public class TodoService extends RestService{
     }
 
     public List<Todo> list(int offset, int limit) {
-        return list(Map.of("offset", String.valueOf(offset), "limit", String.valueOf(limit)));
+        return list(Map.of(OFFSET, String.valueOf(offset), LIMIT, String.valueOf(limit)));
     }
 
     public List<Todo> list() {

@@ -83,6 +83,7 @@ public class TodoWebSocketTest extends BaseTest {
                 .until(() -> !wsClient.getMessages().isEmpty());
 
         assertThat(todoSteps.convertMessageToTodo(wsClient.getMessages()))
+                .as("WebSocket should receive messages with Unicode characters")
                 .containsExactly(todo);
     }
 
@@ -112,7 +113,7 @@ public class TodoWebSocketTest extends BaseTest {
 
         List<Todo> receivedTodos = todoSteps.convertMessageToTodo(wsClient.getMessages());
         assertThat(receivedTodos)
-                .hasSize(todoCount)
+                .as("All created todos should be received via WebSocket")
                 .containsExactlyInAnyOrderElementsOf(createdTodos);
     }
 
@@ -127,6 +128,7 @@ public class TodoWebSocketTest extends BaseTest {
                 .until(() -> wsClient.getMessages().size() == 3);
 
         assertThat(todoSteps.convertMessageToTodo(wsClient.getMessages()))
+                .as("WebSocket messages should be received in the same order as todos were created")
                 .containsExactly(first, second, third);
     }
 

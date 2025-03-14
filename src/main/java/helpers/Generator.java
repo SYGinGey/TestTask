@@ -13,9 +13,9 @@ public class Generator {
     private static final Random rnd = new Random();
 
     /***
-     * @param start Стартовое число для генерации
-     * @param end конечное число для генерации
-     * @return Возвращает сгенерированное число     */
+     * @param start start number for generation
+     * @param end end number for generation
+     * @return return generated number     */
     public static int randInt(int start, int end) {
         return start + (int) Math.round(Math.random() * (end - start));
     }
@@ -37,9 +37,9 @@ public class Generator {
     }
 
     /**
-     * @param min  мин значение генерируемой строки
-     * @param max  макс значение генерируемой строки
-     * @param type 0 - генерация латинцы, 1 - генерация спец символов, 2 - генерация чисел, 3 - латиницы и цифр, 4 - all
+     * @param min  min value of string generation
+     * @param max  max value of string generation
+     * @param type 0 - LAT, 1 - Special symbols, 2 - numbers, 3 - LAT + numbers, 4 - all
      * @return Возвращает рандомносгенерённую строку указанной длинны и типа
      */
     public static String randString(int min, int max, int type) {
@@ -51,7 +51,7 @@ public class Generator {
             case 2 -> returnString = getRandomString(lengthName, num);
             case 3 -> returnString = getRandomString(lengthName, lat + num);
             case 4 -> returnString = getRandomString(lengthName, all);
-            default -> log.error("Введён неверный тип для генерации");
+            default -> log.error("Wrong input generation type");
         }
         return returnString;
     }

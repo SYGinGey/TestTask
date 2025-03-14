@@ -10,7 +10,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <!-- Root logger referring to console appender -->
+        <Logger name="io.qameta.allure.AllureLifecycle" level="off" additivity="false"/>
         <Root level="info" additivity="false">
             <AppenderRef ref="console" />
         </Root>
